@@ -11,12 +11,13 @@ defmodule GameBackend.Entities.World.City do
     }
   end
 
-  def fetch do
+  def fetch_city do
     {city} =
     Ecspanse.Query.select({Ecspanse.Entity}, with: [Locations.City])
     |> Ecspanse.Query.one()
-    {:ok, ent} = Ecspanse.Query.fetch_entity(city.id)
-    Ecspanse.Query.fetch_components(ent, {Locations.Name})
+    city
+    # {:ok, ent} = Ecspanse.Query.fetch_entity(city.id)
+    # Ecspanse.Query.fetch_components(ent, {Locations.Name})
   end
 end
 
@@ -31,5 +32,18 @@ defmodule GameBackend.Entities.World.Forest do
         {Locations.Name, [name: name]},
       ]
     }
+  end
+
+  def get_forest_entity do
+    {forest} =
+      Ecspanse.Query.select({Ecspanse.Entity}, with: [Locations.Forest])
+      |> Ecspanse.Query.one()
+    forest
+  end
+
+  def list_children do
+    get_forest_entity()
+    |> Ecspanse.Query.list_children()
+    # |> IO.inspect()
   end
 end
