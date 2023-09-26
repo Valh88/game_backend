@@ -4,7 +4,7 @@ defmodule GameBackend.Systems.RunWorld do
 
 
   def run(_arg) do
-    Ecspanse.Command.spawn_entity!(World.City.start("Name city"))
     Ecspanse.Command.spawn_entity!(World.Forest.start("name location"))
+    Ecspanse.Command.spawn_entity!(World.City.start("Name city"))
   end
 end
