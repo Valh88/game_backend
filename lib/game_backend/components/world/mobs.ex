@@ -29,3 +29,4 @@ defmodule GameBackend.Components.World.Mobs.Level do
     end
   end
 end
+

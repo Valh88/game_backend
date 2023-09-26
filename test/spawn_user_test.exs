@@ -17,15 +17,15 @@ defmodule GameBackend.Systems.SpawnUserTest do
   end
 
   setup do
-    {:ok, _proc} = start_supervised({GameTest, :test})
+    {:ok, _proc} = start_supervised({GameBackend, :test})
     Ecspanse.System.debug()
-    event = 3
+    # event = 3
 
-    %{event: event, fake_id: "dasdsadsadsaddasd"}
+    %{fake_id: "dasdsadsadsaddasd"}
   end
 
   test "check system, spawn user",
-  %{event: event, fake_id: fake_id_player} do
+  %{fake_id: fake_id_player} do
     e = event(fake_id_player)
     frame = frame(e)
     GameBackend.Systems.SpawnPlayer.run(e, frame)
@@ -36,17 +36,17 @@ defmodule GameBackend.Systems.SpawnUserTest do
 
     {:ok, hp_component} = GameBackend.Components.PlayerType.Hp.fetch(ent)
     assert hp_component.hp == 100
-    Logger.info(hp_component)
+
 
     [parrent] = GameBackend.Entities.Player.Player.list_parrent(fake_id_player)
+    IO.inspect(parrent)
     {:ok, component} = Ecspanse.Query.fetch_component(parrent, GameBackend.Components.World.Locations.Name)
     assert component.name == "name location"
-    Logger.info(component)
 
 
-    [child] = GameBackend.Entities.World.Forest.list_children()
-    assert child.id == fake_id_player
-    Logger.info(child.id)
+    [_, child_2] = GameBackend.Entities.World.Forest.list_children()
+    assert child_2.id == fake_id_player
+    Logger.info(child_2.id)
   end
 
   defp frame(event) do

@@ -6,6 +6,7 @@ defmodule GameBackend do
   alias GameBackend.Systems
 
   @impl Ecspanse
+  @spec setup(Ecspanse.Data.t()) :: Ecspanse.Data.t()
   def setup(arg) do
     arg
     |> Ecspanse.add_startup_system(Systems.RunWorld)

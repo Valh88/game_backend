@@ -41,7 +41,3 @@ end
 defmodule GameBackend.Components.PlayerType.Level do
   use Ecspanse.Component, state: [current_level: 1, pounts: 0]
 end
-
-# defmodule GameBackend.Components.PlayerType.ExperiencePoints do
-#   use Ecspanse.Component, state: [points: 0]
-# end

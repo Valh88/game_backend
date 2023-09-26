@@ -45,4 +45,9 @@ defmodule GameBackend.Entities.Player.Player do
       {:error, :not_found} ->  {:error, :not_found}
     end
   end
+
+  @spec get_user_entity(binary) :: {:error, :not_found} | {:ok, Ecspanse.Entity.t()}
+  def get_user_entity(player_id) do
+    Ecspanse.Query.fetch_entity(player_id)
+  end
 end

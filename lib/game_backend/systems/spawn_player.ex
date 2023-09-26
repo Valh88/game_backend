@@ -13,13 +13,11 @@ defmodule GameBackend.Systems.SpawnPlayer do
     Player.add_player(event.player_id)
 
     loc = World.Forest.get_forest_entity()
-    IO.inspect(loc)
-    {:ok, player} = Ecspanse.Query.fetch_entity(event.player_id)
+    {:ok, player} = Player.get_user_entity(event.player_id)
     Ecspanse.Command.add_child!(loc, player)
-
   end
 
-  @spec spawn_user(any) :: :ok
+  @spec spawn_user(binary()) :: :ok
   def spawn_user(player_id) do
     Ecspanse.event(
       {SpawnPlayerEvent, player_id: player_id}

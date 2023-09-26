@@ -22,6 +22,7 @@ defmodule GameBackend.Entities.World.City do
 end
 
 defmodule GameBackend.Entities.World.Forest do
+  alias GameBackend.Components.World.Mobs
   alias GameBackend.Components.World.Locations
 
   def start(name) do
@@ -30,7 +31,8 @@ defmodule GameBackend.Entities.World.Forest do
       components: [
         Locations.Forest,
         {Locations.Name, [name: name]},
-      ]
+      ],
+      children: spawn_mobs_forest(),
     }
   end
 
@@ -41,9 +43,26 @@ defmodule GameBackend.Entities.World.Forest do
     forest
   end
 
+  defp spawn_mobs_forest do
+    Ecspanse.Command.spawn_entities!([
+      add_wolf_for_forest(),
+    ])
+  end
+
+  defp add_wolf_for_forest do
+    {
+      Ecspanse.Entity,
+      components: [
+        {Mobs.WolfMob, name: "Just Wolf Test"},
+        {Mobs.Hp, hp: 50},
+        {Mobs.Attack, attack: 10},
+        {Mobs.Level, level: 1}
+      ]
+    }
+  end
+
   def list_children do
     get_forest_entity()
     |> Ecspanse.Query.list_children()
-    # |> IO.inspect()
   end
 end
